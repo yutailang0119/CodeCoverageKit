@@ -31,7 +31,7 @@ extension Mackerel {
         struct Metric: Encodable {
             let name: String
             let time: Date
-            let value: Double
+            let value: Decimal
 
             private enum CodingKeys: String, CodingKey {
                 case name

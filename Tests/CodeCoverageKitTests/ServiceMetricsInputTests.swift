@@ -19,7 +19,19 @@ final class ServiceMetricsInputTests: XCTestCase {
         let input = Mackerel.ServiceMetricsInput(metrics: metrics)
         let encoded = try JSONEncoder().encode(input)
 
-        let json = try JSONSerialization.jsonObject(with: encoded, options: .allowFragments)
-        XCTAssertNotNil(json as? [Any])
+        let json = String(data: encoded, encoding: .utf8)
+        XCTAssertEqual(json, input.json)
+    }
+}
+
+private extension Mackerel.ServiceMetricsInput {
+    var json: String {
+        "[\(metrics.map(\.json).joined(separator: ","))]"
+    }
+}
+
+private extension Mackerel.ServiceMetricsInput.Metric {
+    var json: String {
+        "{\"name\":\"\(name)\",\"time\":\(time.timeIntervalSince1970),\"value\":\(value)}"
     }
 }
