@@ -19,6 +19,7 @@ do {
                                       serviceName: environment.serviceName,
                                       graphName: environment.graphName,
                                       coverage: coverage)
+    let sema = DispatchSemaphore(value: 0)
     action.run { result in
         switch result {
         case .success:
@@ -26,7 +27,9 @@ do {
         case .failure(let error):
             print(error)
         }
+        sema.signal()
     }
+    sema.wait()
 } catch {
     print(error)
 }
