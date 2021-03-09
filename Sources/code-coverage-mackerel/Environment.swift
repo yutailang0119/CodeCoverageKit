@@ -5,7 +5,7 @@ struct Environment {
     let apiKey: String
     let userAgent: String?
     let serviceName: String
-    let graphName: String
+    let metricName: String
     let codecovFilePath: String
 
     init() {
@@ -13,7 +13,7 @@ struct Environment {
         guard let serverURL = URL(string: mackerelServerURL),
               let apiKey = ProcessInfo.processInfo.environment[""],
               let serviceName = ProcessInfo.processInfo.environment[""],
-              let graphName = ProcessInfo.processInfo.environment[""],
+              let metricName = ProcessInfo.processInfo.environment[""],
               let codecovFilePath = ProcessInfo.processInfo.environment[""] else {
             fatalError()
         }
@@ -22,7 +22,7 @@ struct Environment {
         self.apiKey = apiKey
         self.userAgent = ProcessInfo.processInfo.environment[""]
         self.serviceName = serviceName
-        self.graphName = graphName
+        self.metricName = metricName
         self.codecovFilePath = codecovFilePath
     }
 }

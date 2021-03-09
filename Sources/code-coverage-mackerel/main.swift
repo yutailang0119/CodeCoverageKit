@@ -17,7 +17,7 @@ do {
                                       userAgent: environment.userAgent,
                                       serverURL: environment.serverURL,
                                       serviceName: environment.serviceName,
-                                      graphName: environment.graphName,
+                                      metricName: environment.metricName,
                                       coverage: coverage)
     let sema = DispatchSemaphore(value: 0)
     action.run { result in

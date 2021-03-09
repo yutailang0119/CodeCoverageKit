@@ -13,7 +13,7 @@ public struct ServiceMetricsAction: MackerelAction {
     private let userAgent: String
     private let serverURL: URL
     private let serviceName: String
-    private let graphName: String
+    private let metricName: String
     private let coverage: CodeCov.Coverage
 
     public init(session: URLSession,
@@ -21,14 +21,14 @@ public struct ServiceMetricsAction: MackerelAction {
                 userAgent: String?,
                 serverURL: URL,
                 serviceName: String,
-                graphName: String,
+                metricName: String,
                 coverage: CodeCov.Coverage) {
         self.session = session
         self.apiKey = apiKey
         self.userAgent = userAgent ?? "swiftpm-code-coverage-mackerel"
         self.serverURL = serverURL
         self.serviceName = serviceName
-        self.graphName = graphName
+        self.metricName = metricName
         self.coverage = coverage
     }
 
@@ -106,10 +106,10 @@ extension ServiceMetricsAction {
     public var body: Data? {
         let date = Date()
         let input = Input(metrics: [
-            .init(name: "\(graphName).functions", time: date, value: Decimal(coverage.totals.functions.percent)),
-            .init(name: "\(graphName).instantiations", time: date, value: Decimal(coverage.totals.instantiations.percent)),
-            .init(name: "\(graphName).lines", time: date, value: Decimal(coverage.totals.lines.percent)),
-            .init(name: "\(graphName).regions", time: date, value: Decimal(coverage.totals.regions.percent)),
+            .init(name: "\(metricName).functions", time: date, value: Decimal(coverage.totals.functions.percent)),
+            .init(name: "\(metricName).instantiations", time: date, value: Decimal(coverage.totals.instantiations.percent)),
+            .init(name: "\(metricName).lines", time: date, value: Decimal(coverage.totals.lines.percent)),
+            .init(name: "\(metricName).regions", time: date, value: Decimal(coverage.totals.regions.percent)),
         ])
         return try? JSONEncoder().encode(input)
     }
