@@ -25,33 +25,3 @@ public enum Mackerel {
         }
     }
 }
-
-extension Mackerel {
-    struct ServiceMetricsInput: Encodable {
-        struct Metric: Encodable {
-            let name: String
-            let time: Date
-            let value: Decimal
-
-            private enum CodingKeys: String, CodingKey {
-                case name
-                case time
-                case value
-            }
-
-            func encode(to encoder: Encoder) throws {
-                var container = encoder.container(keyedBy: CodingKeys.self)
-                try container.encode(name, forKey: .name)
-                try container.encode(time.timeIntervalSince1970, forKey: .time)
-                try container.encode(value, forKey: .value)
-            }
-        }
-
-        let metrics: [Metric]
-
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.singleValueContainer()
-            try container.encode(metrics)
-        }
-    }
-}

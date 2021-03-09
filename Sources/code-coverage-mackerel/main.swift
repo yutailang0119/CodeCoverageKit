@@ -12,13 +12,13 @@ do {
         print("Not Found to code coverage")
         exit(1)
     }
-    let action = MackerelAction(session: URLSession.shared,
-                                apiKey: environment.apiKey,
-                                userAgent: environment.userAgent,
-                                serverURL: environment.serverURL,
-                                serviceName: environment.serviceName,
-                                graphName: environment.graphName,
-                                coverage: coverage)
+    let action = ServiceMetricsAction(session: URLSession.shared,
+                                      apiKey: environment.apiKey,
+                                      userAgent: environment.userAgent,
+                                      serverURL: environment.serverURL,
+                                      serviceName: environment.serviceName,
+                                      graphName: environment.graphName,
+                                      coverage: coverage)
     action.run { result in
         switch result {
         case .success:

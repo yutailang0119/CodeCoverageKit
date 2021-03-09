@@ -1,19 +1,13 @@
 //
-//  MackerelAction.swift
+//  ServiceMetricsAction.swift
 //  CodeCoverageKit
 //
-//  Created by Yutaro Muta on 2021/03/05.
+//  Created by Yutaro Muta on 2021/03/09.
 //
 
 import Foundation
 
-public struct MackerelAction {
-    public enum ActionError: Error {
-        case mackerel(error: Mackerel.MackerelError)
-        case noHTTPResponse
-        case unknown(error: Error)
-    }
-
+public struct ServiceMetricsAction: MackerelAction {
     private let session: URLSession
     private let apiKey: String
     private let userAgent: String
@@ -56,23 +50,52 @@ public struct MackerelAction {
                 completion(.failure(.mackerel(error: mackarelError)))
             }
         }
+        .resume()
     }
 }
 
-extension MackerelAction {
-    private var path: String {
+extension ServiceMetricsAction {
+    struct Input: Encodable {
+        struct Metric: Encodable {
+            let name: String
+            let time: Date
+            let value: Decimal
+
+            private enum CodingKeys: String, CodingKey {
+                case name
+                case time
+                case value
+            }
+
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                try container.encode(name, forKey: .name)
+                try container.encode(time.timeIntervalSince1970, forKey: .time)
+                try container.encode(value, forKey: .value)
+            }
+        }
+
+        let metrics: [Metric]
+
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            try container.encode(metrics)
+        }
+    }
+
+    public var path: String {
         "/api/v0/services/\(serviceName)/tsdb"
     }
 
-    private var queryItems: [URLQueryItem]? {
+    public var queryItems: [URLQueryItem]? {
         nil
     }
 
-    private var httpMethod: String {
+    public var httpMethod: String {
         "POST"
     }
 
-    private var headers: [String: String] {
+    public var headers: [String: String] {
         [
             "X-Api-Key": apiKey,
             "User-Agent": userAgent,
@@ -80,9 +103,9 @@ extension MackerelAction {
         ]
     }
 
-    private var body: Data? {
+    public var body: Data? {
         let date = Date()
-        let input = Mackerel.ServiceMetricsInput(metrics: [
+        let input = Input(metrics: [
             .init(name: "\(graphName).functions", time: date, value: Decimal(coverage.totals.functions.percent)),
             .init(name: "\(graphName).instantiations", time: date, value: Decimal(coverage.totals.instantiations.percent)),
             .init(name: "\(graphName).lines", time: date, value: Decimal(coverage.totals.lines.percent)),
@@ -90,8 +113,8 @@ extension MackerelAction {
         ])
         return try? JSONEncoder().encode(input)
     }
-    
-    private var request: URLRequest {
+
+    public var request: URLRequest {
         var components = URLComponents(url: serverURL,
                                        resolvingAgainstBaseURL: false)
         components?.path = path
