@@ -32,7 +32,7 @@ public struct ServiceMetricsAction: MackerelAction {
         self.coverage = coverage
     }
 
-    public func run(completion: @escaping (Result<Void, ActionError>) -> Void) {
+    public func run(completion: @escaping (Result<String, ActionError>) -> Void) {
         session.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(.unknown(error: error)))
@@ -44,7 +44,14 @@ public struct ServiceMetricsAction: MackerelAction {
             }
             switch httpResponse.statusCode {
             case 200..<300:
-                completion(.success(()))
+                let message = """
+                Success recording to \(serviceName)/\(metricName)
+                - functions: \(coverage.totals.functions.percent)
+                - instantiations: \(coverage.totals.instantiations.percent)
+                - lines: \(coverage.totals.lines.percent)
+                - regions: \(coverage.totals.regions.percent)
+                """
+                completion(.success(message))
             default:
                 let mackarelError = Mackerel.MackerelError(statusCode: httpResponse.statusCode)
                 completion(.failure(.mackerel(error: mackarelError)))

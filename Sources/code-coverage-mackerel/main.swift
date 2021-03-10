@@ -22,8 +22,8 @@ do {
     let sema = DispatchSemaphore(value: 0)
     action.run { result in
         switch result {
-        case .success:
-            print("Success")
+        case .success(let value):
+            print(value)
         case .failure(let error):
             print(error)
         }
