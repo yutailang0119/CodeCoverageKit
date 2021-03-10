@@ -3,7 +3,8 @@ import CodeCoverageKit
 
 let environment = Environment()
 guard let data = FileManager.default.contents(atPath: environment.codecovFilePath) else {
-    fatalError("")
+    print("Can not read file")
+    exit(1)
 }
 
 do {
@@ -19,17 +20,19 @@ do {
                                       serviceName: environment.serviceName,
                                       metricName: environment.metricName,
                                       coverage: coverage)
-    let sema = DispatchSemaphore(value: 0)
+    let semaphore = DispatchSemaphore(value: 0)
     action.run { result in
         switch result {
         case .success(let value):
             print(value)
         case .failure(let error):
             print(error)
+            exit(1)
         }
-        sema.signal()
+        semaphore.signal()
     }
-    sema.wait()
+    semaphore.wait()
 } catch {
     print(error)
+    exit(1)
 }
