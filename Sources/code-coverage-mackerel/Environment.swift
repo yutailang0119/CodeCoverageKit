@@ -9,13 +9,13 @@ struct Environment {
     let codecovFilePath: String
 
     init() {
-        let mackerelAPIURL = ProcessInfo.processInfo.environment[""] ?? "https://api.mackerelio.com/"
+        let mackerelAPIURL = ProcessInfo.processInfo.environment["MACKEREL_API_URL"] ?? "https://api.mackerelio.com/"
         guard let apiURL = URL(string: mackerelAPIURL),
-              let apiKey = ProcessInfo.processInfo.environment[""],
-              let serviceName = ProcessInfo.processInfo.environment[""],
-              let metricName = ProcessInfo.processInfo.environment[""],
-              let codecovFilePath = ProcessInfo.processInfo.environment[""] else {
-            fatalError()
+              let apiKey = ProcessInfo.processInfo.environment["MACKEREL_API_KEY"],
+              let serviceName = ProcessInfo.processInfo.environment["MACKEREL_SERVICE_NAME"],
+              let metricName = ProcessInfo.processInfo.environment["MACKEREL_METRIC_NAME"],
+              let codecovFilePath = ProcessInfo.processInfo.environment["CODECOV_FILE_PATH"] else {
+            fatalError("Please set environment variables")
         }
 
         self.apiURL = apiURL
