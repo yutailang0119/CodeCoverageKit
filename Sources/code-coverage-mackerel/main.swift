@@ -16,7 +16,7 @@ do {
     let action = ServiceMetricsAction(session: URLSession.shared,
                                       apiKey: environment.apiKey,
                                       userAgent: environment.userAgent,
-                                      serverURL: environment.serverURL,
+                                      apiURL: environment.apiURL,
                                       serviceName: environment.serviceName,
                                       metricName: environment.metricName,
                                       coverage: coverage)

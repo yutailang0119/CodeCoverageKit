@@ -1,7 +1,7 @@
 import Foundation
 
 struct Environment {
-    let serverURL: URL
+    let apiURL: URL
     let apiKey: String
     let userAgent: String?
     let serviceName: String
@@ -9,8 +9,8 @@ struct Environment {
     let codecovFilePath: String
 
     init() {
-        let mackerelServerURL = ProcessInfo.processInfo.environment[""] ?? "https://api.mackerelio.com/"
-        guard let serverURL = URL(string: mackerelServerURL),
+        let mackerelAPIURL = ProcessInfo.processInfo.environment[""] ?? "https://api.mackerelio.com/"
+        guard let apiURL = URL(string: mackerelAPIURL),
               let apiKey = ProcessInfo.processInfo.environment[""],
               let serviceName = ProcessInfo.processInfo.environment[""],
               let metricName = ProcessInfo.processInfo.environment[""],
@@ -18,7 +18,7 @@ struct Environment {
             fatalError()
         }
 
-        self.serverURL = serverURL
+        self.apiURL = apiURL
         self.apiKey = apiKey
         self.userAgent = ProcessInfo.processInfo.environment[""]
         self.serviceName = serviceName

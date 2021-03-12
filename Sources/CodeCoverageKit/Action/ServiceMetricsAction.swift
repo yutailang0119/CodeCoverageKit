@@ -9,9 +9,9 @@ import Foundation
 
 public struct ServiceMetricsAction: MackerelAction {
     private let session: URLSession
+    private let apiURL: URL
     private let apiKey: String
     private let userAgent: String
-    private let serverURL: URL
     private let serviceName: String
     private let metricName: String
     private let coverage: CodeCov.Coverage
@@ -19,14 +19,14 @@ public struct ServiceMetricsAction: MackerelAction {
     public init(session: URLSession,
                 apiKey: String,
                 userAgent: String?,
-                serverURL: URL,
+                apiURL: URL,
                 serviceName: String,
                 metricName: String,
                 coverage: CodeCov.Coverage) {
         self.session = session
         self.apiKey = apiKey
         self.userAgent = userAgent ?? "swiftpm-code-coverage-mackerel"
-        self.serverURL = serverURL
+        self.apiURL = apiURL
         self.serviceName = serviceName
         self.metricName = metricName
         self.coverage = coverage
@@ -122,7 +122,7 @@ extension ServiceMetricsAction {
     }
 
     public var request: URLRequest {
-        var components = URLComponents(url: serverURL,
+        var components = URLComponents(url: apiURL,
                                        resolvingAgainstBaseURL: false)
         components?.path = path
         components?.queryItems = nil
