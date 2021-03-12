@@ -6,9 +6,10 @@ import PackageDescription
 let package = Package(
     name: "swift-code-coverage-mackerel",
     products: [
-        .executable(
-            name: "code-coverage-mackerel",
-            targets: ["code-coverage-mackerel"]),
+        .executable(name: "code-coverage-mackerel",
+                    targets: ["code-coverage-mackerel"]),
+        .library(name: "CodeCoverageKit",
+                 targets: ["CodeCoverageKit"]),
     ],
     dependencies: [
     ],
