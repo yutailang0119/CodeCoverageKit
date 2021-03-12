@@ -8,10 +8,10 @@
 import Foundation
 
 public struct ServiceMetricsAction: MackerelAction {
-    private let session: URLSession
-    private let apiURL: URL
-    private let apiKey: String
-    private let userAgent: String
+    public let session: URLSession
+    public let apiURL: URL
+    public let apiKey: String
+    public let userAgent: String
     private let serviceName: String
     private let metricName: String
     private let coverage: CodeCov.Coverage

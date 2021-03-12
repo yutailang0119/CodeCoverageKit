@@ -8,6 +8,10 @@
 import Foundation
 
 public protocol MackerelAction {
+    var session: URLSession { get }
+    var apiURL: URL { get }
+    var apiKey: String { get }
+    var userAgent: String { get }
     var path: String { get }
     var queryItems: [URLQueryItem]? { get }
     var httpMethod: String { get }
