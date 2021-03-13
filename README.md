@@ -1,3 +1,3 @@
-# swift-code-coverage-mackerel
+# CodeCoverageMackerelKit
 
 A description of this package.

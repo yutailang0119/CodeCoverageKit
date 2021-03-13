@@ -1,6 +1,6 @@
 //
 //  ServiceMetricsAction.swift
-//  CodeCoverageKit
+//  CodeCoverageMackerelKit
 //
 //  Created by Yutaro Muta on 2021/03/09.
 //
