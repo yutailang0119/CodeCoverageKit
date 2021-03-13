@@ -18,7 +18,7 @@ struct Environment {
 
         self.apiURL = ProcessInfo.processInfo.environment["MACKEREL_API_URL"].flatMap(URL.init(string:))
         self.apiKey = apiKey
-        self.userAgent = ProcessInfo.processInfo.environment[""]
+        self.userAgent = ProcessInfo.processInfo.environment["MACKEREL_USER_AGENT"]
         self.serviceName = serviceName
         self.metricName = metricName
         self.codecovFilePath = codecovFilePath
