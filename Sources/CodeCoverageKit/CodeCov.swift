@@ -1,6 +1,6 @@
 //
 //  CodeCov.swift
-//  CodeCoverageMackerelKit
+//  CodeCoverageKit
 //
 //  Created by Yutaro Muta on 2021/03/05.
 //

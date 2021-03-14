@@ -1,5 +1,5 @@
 import Foundation
-import CodeCoverageMackerelKit
+import CodeCoverageKit
 
 let environment = Environment()
 guard let data = FileManager.default.contents(atPath: environment.codecovFilePath) else {

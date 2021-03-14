@@ -1,12 +1,12 @@
 //
 //  ServiceMetricsInputTests.swift
-//  CodeCoverageMackerelKitTests
+//  MackerelKitTests
 //
 //  Created by Yutaro Muta on 2021/03/05.
 //
 
 import XCTest
-@testable import CodeCoverageMackerelKit
+@testable import MackerelKit
 
 final class ServiceMetricsInputTests: XCTestCase {
     func testEncodeAsArray() throws {

@@ -4,24 +4,27 @@
 import PackageDescription
 
 let package = Package(
-    name: "CodeCoverageMackerelKit",
+    name: "CodeCoverageKit",
     products: [
         .executable(name: "code-coverage-mackerel",
                     targets: ["code-coverage-mackerel"]),
-        .library(name: "CodeCoverageMackerelKit",
-                 targets: ["CodeCoverageMackerelKit"]),
+        .library(name: "CodeCoverageKit",
+                 targets: ["CodeCoverageKit"]),
     ],
     dependencies: [
     ],
     targets: [
         .target(
             name: "code-coverage-mackerel",
-            dependencies: ["CodeCoverageMackerelKit"]),
+            dependencies: ["CodeCoverageKit"]),
         .target(
-            name: "CodeCoverageMackerelKit",
+            name: "CodeCoverageKit",
+            dependencies: ["MackerelKit"]),
+        .target(
+            name: "MackerelKit",
             dependencies: []),
         .testTarget(
-            name: "CodeCoverageMackerelKitTests",
-            dependencies: ["CodeCoverageMackerelKit"]),
+            name: "MackerelKitTests",
+            dependencies: ["MackerelKit"]),
     ]
 )
