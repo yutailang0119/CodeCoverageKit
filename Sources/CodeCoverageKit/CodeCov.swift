@@ -26,7 +26,7 @@ public struct CodeCov: Decodable {
             public let regions: Value
         }
 
-        let totals: Totals
+        public let totals: Totals
     }
 
     public let data: [Coverage]
