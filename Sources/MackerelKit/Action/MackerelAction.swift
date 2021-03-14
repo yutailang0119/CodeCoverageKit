@@ -29,3 +29,26 @@ extension MackerelAction {
         "swiftpm-code-coverage-mackerel"
     }
 }
+
+extension MackerelAction {
+    public func run(completion: @escaping (Result<Void, ActionError>) -> Void) {
+        session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(.unknown(error: error)))
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(.failure(.noHTTPResponse))
+                return
+            }
+            switch httpResponse.statusCode {
+            case 200..<300:
+                completion(.success(()))
+            default:
+                let mackarelError = MackerelError(statusCode: httpResponse.statusCode)
+                completion(.failure(.mackerel(error: mackarelError)))
+            }
+        }
+        .resume()
+    }
+}
